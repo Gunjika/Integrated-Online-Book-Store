@@ -5,17 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "Shopping")
 public class ShoppingCart {
-	private String userId;
+	
 	@Id
 	@GeneratedValue(generator="customerId_gen",strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="customerID_gen",initialValue = 1010,allocationSize = 1)
 	private int book_Id;
 //	private String book_name;
+	private String userId;
 	private int quantity;
 	public String getUserId() {
 		return userId;
