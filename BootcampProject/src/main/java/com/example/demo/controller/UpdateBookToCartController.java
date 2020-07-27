@@ -53,24 +53,21 @@ public class UpdateBookToCartController {
 		return "Successfully deleted all enitities";
 	}
 	
-	@PutMapping("/updateCart")
-	public ResponseEntity<String> updateCart(@Validated @RequestBody ShoppingCart shoppingCart,BindingResult bindingResult)throws CartException
+	@PutMapping("/updateCart/{book_Id}")
+	public ResponseEntity updateCart(@Validated @RequestBody ShoppingCart shoppingCart,@PathVariable Integer book_Id,BindingResult br)throws CartException
 	{
 		String err = "";
-		if (bindingResult.hasErrors()) {
-			List<FieldError> errors = bindingResult.getFieldErrors();
+		if (br.hasErrors()) {
+			List<FieldError> errors = br.getFieldErrors();
 			for (FieldError error : errors)
 				err += error.getDefaultMessage() + "<br/>";
 			throw new CartException(err);
 		}
-		try
-		{
-			service.updateCart(shoppingCart);
-			return new ResponseEntity<String>("Cart updated successfully", HttpStatus.OK); 
-			
-		}
-		catch (DataIntegrityViolationException ex) {
-			throw new CartException("ID doesnot exists");
+		try {
+			service.updateCart(shoppingCart, book_Id);
+			return new ResponseEntity<String>("Cart Updated", HttpStatus.OK);
+		}catch (DataIntegrityViolationException ex) {
+			throw new CartException("Already exists");			
 		}
 	}
 	

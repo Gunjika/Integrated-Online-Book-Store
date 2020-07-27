@@ -33,13 +33,9 @@ public class UpdateBookImpl implements UpdateBookToCartService {
 	}
 
 	@Override
-	public ShoppingCart updateCart(ShoppingCart shoppingCart) {
-		// TODO Auto-generated method stub
-		ShoppingCart up = dao.getOne(shoppingCart.getBook_Id());
-		if (up != null) {
-			up.setQuantity(shoppingCart.getQuantity());
-		}
-		return dao.save(up);
+	public ShoppingCart updateCart(ShoppingCart shoppingCart,int book_Id)
+	{
+		return dao.save(shoppingCart);
 	}
 
 	@Override
